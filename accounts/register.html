@@ -39,12 +39,17 @@
             let password = document.querySelector('#password').value;
             let hashedPassword = btoa(password);
 
-            fetch('userlist.txt', {
+            // Add the user to the userlist.txt file
+            fetch('./userlist.txt', {
                     method: 'POST',
                     body: `${username},${hashedPassword}\n`
                 })
-                .then(() => {
-                    window.location.href = './login.html';
+                .then(response => {
+                    if (response.ok) {
+                        window.location.href = './login.html';
+                    } else {
+                        throw new Error('Registration failed.');
+                    }
                 })
                 .catch(error => {
                     console.error(error);
