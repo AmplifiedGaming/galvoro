@@ -1,18 +1,13 @@
-<?php
-session_start();
-// Redirect to login page if not logged in
-if (!isset($_SESSION['username'])) {
-    header('Location: login.php');
-    exit;
-}
-
-// Display the dashboard content
-$username = $_SESSION['username'];
-?>
-
 <!DOCTYPE html>
 <html>
-
+<script>
+if (!sessionStorage.getItem('username')) {
+window.location.href = 'login.html';
+} else {
+// User is logged in, display the dashboard content
+let username = sessionStorage.getItem('username');
+}
+</script>
 <head>
    <title>Galvoro Games</title>
    <meta name="viewport" content="width=device-width, initial-scale=1">
