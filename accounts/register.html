@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<script>
+  // Check if the request method is POST
+if (document.method === 'POST') {
+let username = document.querySelector('#username').value;
+let password = document.querySelector('#password').value;
+  // Hash the password
+let hashedPassword = btoa(password);
+
+// Add the user to the userlist.txt file
+fetch('userlist.txt', {
+    method: 'POST',
+    body: `${username},${hashedPassword}\n`
+})
+.then(() => {
+    window.location.href = 'login.html';
+})
+.catch(error => {
+    console.error(error);
+});
+
+</script>
+<head>
+    <title>Galvoro Games</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+</head>
+<style>
+    body {
+  margin: auto;
+  width: 50%;
+  border: 2px solid black;
+  padding: 10px;
+      text-align: center;
+}
+</style>
+<body>
+    <h2>Register</h2>
+    <?php if (isset($errorMessage)) { ?>
+        <p><?php echo $errorMessage; ?></p>
+    <?php } ?>
+    <form method="POST" action="">
+        <label for="username">Username:</label>
+        <input type="text" name="username" required>
+      <br>
+      <br>
+        <label for="password">Password:</label>
+        <input type="password" name="password" required><br>
+      <br>
+      <br>
+        <input type="submit" value="Register">
+            <br>
+      <br>
+      <p>Already have a login? <a href="login.html">Login Here</a></p>
+    </form>
+</body>
+
+</html>

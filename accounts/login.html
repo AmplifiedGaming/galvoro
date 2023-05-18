@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<script>
+  // Check if the request method is POST
+if (window.location.href.indexOf('login.html') !== -1 && document.method === 'POST') {
+let username = document.querySelector('#username').value;
+let password = document.querySelector('#password').value;
+  // Check if the user exists in the userlist.txt file
+fetch('userlist.txt')
+    .then(response => response.text())
+    .then(users => {
+        users = users.split('\n');
+        let found = false;
+        for (let i = 0; i < users.length; i++) {
+            let [storedUsername, storedPassword] = users[i].split(',');
+            if (username === storedUsername && password === storedPassword) {
+                found = true;
+                break;
+            }
+        }
+
+        if (found) {
+            sessionStorage.setItem('username', username);
+            window.location.href = 'dashboard.html';
+        } else {
+            let errorMessage = "Invalid username or password";
+            document.querySelector('#error-message').textContent = errorMessage;
+        }
+    });
+</script>
+<head>
+    <title>Galvoro Games</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png">
+</head>
+<style>
+    body {
+  margin: auto;
+  width: 50%;
+  height: 50%;
+  border: 2px solid black;
+  padding: 10px ;
+      text-align: center;
+}
+</style>
+<body>
+    <h2>Login</h2>
+    <?php if (isset($errorMessage)) { ?>
+        <p><?php echo $errorMessage; ?></p>
+    <?php } ?>
+    <form method="POST" action="">
+        <label for="username">Username:</label>
+        <input type="text" name="username" required>
+      <br>
+      <br>
+        <label for="password">Password:</label>
+        <input type="password" name="password" required>
+      <br>
+      <br>
+        <input type="submit" value="Login">
+    </form>
+  <br>
+  <br>
+  <P>Dont have a login? <a href="/account/register.html">Register Here</a></P>
+</body>
+
+</html>
